@@ -15,10 +15,11 @@ public class CustomerEntity extends BaseEntity{
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
-    private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "customerEntities",fetch = FetchType.LAZY)
+    private List<UserEntity> userEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
 
     public String getFullName() {
@@ -45,14 +46,6 @@ public class CustomerEntity extends BaseEntity{
         this.email = email;
     }
 
-    public List<AssignmentCustomerEntity> getAssignmentCustomerEntities() {
-        return assignmentCustomerEntities;
-    }
-
-    public void setAssignmentCustomerEntities(List<AssignmentCustomerEntity> assignmentCustomerEntities) {
-        this.assignmentCustomerEntities = assignmentCustomerEntities;
-    }
-
     public List<TransactionEntity> getTransactionEntities() {
         return transactionEntities;
     }
@@ -61,6 +54,12 @@ public class CustomerEntity extends BaseEntity{
         this.transactionEntities = transactionEntities;
     }
 
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
+    }
 
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
+    }
 }
 

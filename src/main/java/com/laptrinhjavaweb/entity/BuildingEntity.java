@@ -3,11 +3,13 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "building")
-public class BuildingEntity extends BaseEntity{
+public class BuildingEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
     @Column(name = "street")
@@ -57,11 +59,15 @@ public class BuildingEntity extends BaseEntity{
     @Column(name = "type")
     private String type;
 
-    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY)
-    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "assignmentbuilding",
+            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+    private List<UserEntity> userEntities = new ArrayList<>();
 
     public String getDistrict() {
         return district;
@@ -264,13 +270,12 @@ public class BuildingEntity extends BaseEntity{
         this.rentAreaEntities = rentAreaEntities;
     }
 
-    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
-        return assignmentBuildingEntities;
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
     }
 
-    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
-        this.assignmentBuildingEntities = assignmentBuildingEntities;
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
     }
-
 }
 

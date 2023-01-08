@@ -417,12 +417,12 @@
             values.push($(this).val());
         });
         let data = {
-            "staffIDs": values
+            "staffIds": values
         }
         $.ajax({
             type: "post",
             url: '<c:url value="/api/building/"/>' + buildingAssId + '/assignment',
-            data: JSON.stringify(data),
+            data: JSON.stringify(values),
             dataType: "json",//kieu du lieu tu server tra ve client
             contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
@@ -457,4 +457,3 @@
 </script>
 </body>
 </html>
-
